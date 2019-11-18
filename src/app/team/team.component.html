@@ -1,0 +1,194 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/team/add"><button mat-raised-button type="submit" class="btn btn-danger pull-right">Thêm
+                        mới</button></a>
+            </div>
+            <div class="col-md-12">
+                <form class="navbar-form">
+                    <div class="input-group no-border">
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Tên nhóm" type="text" formControlName="name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Nhóm</h4>
+                        <p class="card-category"> Nhóm của bạn</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-info">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Nhóm
+                                    </th>
+                                    <th>
+                                        Trưởng nhóm
+                                    </th>
+                                    <th>
+                                        Bắt đầu
+                                    </th>
+                                    <th>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of teams">
+                                        <td>
+                                            {{item.team_id}}
+                                        </td>
+                                        <td>
+                                            <a class="nav-link"
+                                                [routerLink]="['/team-detail', item.team_id]">{{item.name}}</a>
+                                        </td>
+                                        <td>
+                                            {{item.teamlead}}
+                                        </td>
+                                        <td>
+                                            {{item.created}}
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <!-- <app-pagging *ngIf="hasRecord" [totalRecord]="totalRecords" [(currentPage)]="currentPage"
+                            (eventHandler)="selectPage()">
+                        </app-pagging> -->
+                    </nav>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">Material Dashboard Heading</h4>
+                    <p class="card-category">Created using Roboto Font Family</p>
+                </div>
+                <div class="card-body">
+                    <div id="typography">
+                        <div class="card-title">
+                            <h2>Typography</h2>
+                        </div>
+                        <div class="row">
+                            <div class="tim-typo">
+                                <h1>
+                                    <span class="tim-note">Header 1</span>The Life of Material Dashboard </h1>
+                            </div>
+                            <div class="tim-typo">
+                                <h2>
+                                    <span class="tim-note">Header 2</span>The Life of Material Dashboard</h2>
+                            </div>
+                            <div class="tim-typo">
+                                <h3>
+                                    <span class="tim-note">Header 3</span>The Life of Material Dashboard</h3>
+                            </div>
+                            <div class="tim-typo">
+                                <h4>
+                                    <span class="tim-note">Header 4</span>The Life of Material Dashboard</h4>
+                            </div>
+                            <div class="tim-typo">
+                                <h5>
+                                    <span class="tim-note">Header 5</span>The Life of Material Dashboard</h5>
+                            </div>
+                            <div class="tim-typo">
+                                <h6>
+                                    <span class="tim-note">Header 6</span>The Life of Material Dashboard</h6>
+                            </div>
+                            <div class="tim-typo">
+                                <p>
+                                    <span class="tim-note">Paragraph</span>
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers. I understand culture. I am the nucleus. I think that’s a
+                                    responsibility that I have, to push possibilities, to show people, this is the level
+                                    that things could be at.</p>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Quote</span>
+                                <blockquote class="blockquote">
+                                    <p>
+                                        I will be the leader of a company that ends up being worth billions of dollars,
+                                        because I got the answers. I understand culture. I am the nucleus. I think
+                                        that’s a responsibility that I have, to push possibilities, to show people, this
+                                        is the level that things could be at.
+                                    </p>
+                                    <small>
+                                        Kanye West, Musician
+                                    </small>
+                                </blockquote>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Muted Text</span>
+                                <p class="text-muted">
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers...
+                                </p>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Primary Text</span>
+                                <p class="text-primary">
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers... </p>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Info Text</span>
+                                <p class="text-info">
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers... </p>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Success Text</span>
+                                <p class="text-success">
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers... </p>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Warning Text</span>
+                                <p class="text-warning">
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers...
+                                </p>
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note">Danger Text</span>
+                                <p class="text-danger">
+                                    I will be the leader of a company that ends up being worth billions of dollars,
+                                    because I got the answers... </p>
+                            </div>
+                            <div class="tim-typo">
+                                <h2>
+                                    <span class="tim-note">Small Tag</span>
+                                    Header with small subtitle
+                                    <br>
+                                    <small>Use "small" tag for the headers</small>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

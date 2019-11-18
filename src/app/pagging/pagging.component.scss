@@ -1,0 +1,50 @@
+/* Common paging */
+
+.edi-result-paging {
+    padding: 5px 20px 5px 0;
+    padding-top: 0;
+}
+
+.edi-result-paging__info {
+    width: 30%;
+    display: inline-block;
+    text-align: left;
+    font-size: 12px;
+}
+
+.edi-result-paging__page {
+    width: 70%;
+    display: inline-block;
+    text-align: right;
+}
+
+.edi-result-paging__dbpr, .edi-result-paging__sgpr, .edi-result-paging__number, .edi-result-paging__sgfw, .edi-result-paging__sgfw {
+    font-size: 12px;
+    height: 25px;
+    width: 25px;
+    display: inline-flex;
+    margin: 0 5px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.edi-result-paging__dbpr, .edi-result-paging__sgpr, .edi-result-paging__sgfw, .edi-result-paging__sgfw {
+    font-weight: bold;
+}
+
+.edi-result-paging__dbpr:hover, .edi-result-paging__sgpr:hover, .edi-result-paging__number:hover, .edi-result-paging__sgfw:hover, .edi-result-paging__sgfw:hover {
+    color: #FAEB00;
+}
+
+.edi-result-paging__selected {
+    border-radius: 50%;
+    background-color: #FAEB00;
+    color: #000000;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.edi-pagging-disable {
+    pointer-events: none;
+}

@@ -1,0 +1,14 @@
+<div class="edi-result-paging" *ngIf="totalPage > 1">
+  <div class="edi-result-paging__info">
+    Tổng {{totalRecord}} | hiển thị {{recordStart}}~{{recordEnd}}
+  </div>
+  <div class="edi-result-paging__page">
+    <div class="edi-result-paging__dbpr {{isFirstPage() ? 'edi-pagging-disable' : '' }}" (click)="firstPage()">
+      &lt;&lt;</div>
+    <div class="edi-result-paging__sgpr {{isFirstPage() ? 'edi-pagging-disable' : '' }}" (click)="backPage()">
+      &lt;</div>
+    <div (click)="selectPage(page)" class="edi-result-paging__number {{ currentPage == page ? 'edi-result-paging__selected' : ''}}" *ngFor="let page of listNumberPage ">{{page}}</div>
+    <div class="edi-result-paging__sgfw {{isLastPage() ? 'edi-pagging-disable' : '' }}" (click)="nextPage()">&gt;</div>
+    <div class="edi-result-paging__sgfw {{isLastPage() ? 'edi-pagging-disable' : '' }}" (click)="lastPage()">&gt;&gt;</div>
+  </div>
+</div>

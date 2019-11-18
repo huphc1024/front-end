@@ -1,0 +1,53 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <div class="fadeIn first">
+      <h1>LOGIN</h1>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-12">
+          <input matInput placeholder="Email" type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval.email.errors }">
+          <div *ngIf="submitted && fval.email.errors" class="invalid-feedback">
+            <div *ngIf="fval.email.errors.required">H?y nh?p email c?a b?n</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <input matInput placeholder="Password" type="password" formControlName="password" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && fval.password.errors }">
+          <div *ngIf="submitted && fval.password.errors" class="invalid-feedback">
+            <div *ngIf="fval.password.errors.required">H?y nh?p m?t kh?u c?a b?n</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <input type="checkbox" formControlName="rememberMe" value="1">Remember Me<br />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button mat-raised-button type="submit" class="btn btn-danger pull-center">Log in</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Remind Passowrd
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div> -->
+
+  </div>
+</div>

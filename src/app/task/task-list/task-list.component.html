@@ -1,0 +1,135 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <form class="navbar-form">
+                  <div class="input-group no-border">
+                      <div class="col-md-4">
+                          <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Tên công việc" type="text" formControlName="name">
+                          </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                          <mat-form-field class="example-full-width">
+                              <input matInput [matDatepicker]="picker" placeholder="Chọn ngày">
+                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                          <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                              <i class="material-icons">search</i>
+                              <div class="ripple-container"></div>
+                          </button>
+                      </div>
+
+                  </div>
+              </form>
+          </div>
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-info">
+                      <h4 class="card-title ">Công việc</h4>
+                      <p class="card-category"> Các công việc của bạn ở đây</p>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead class=" text-info">
+                                  <th>
+                                      ID
+                                  </th>
+                                  <th>
+                                      Công việc
+                                  </th>
+                                  <th>
+                                      Trạng thái
+                                  </th>
+                                  <th>
+                                      Bắt đầu
+                                  </th>
+                                  <th class="text-danger">
+                                      Kết thúc
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr *ngIf="tasks == null">
+                                    Không có công việc
+                                  </tr>
+                                <tr *ngFor="let item of tasks">
+                                      <td>
+                                          {{item.task_id}}
+                                      </td>
+                                      <td>
+                                        <a class="nav-link"
+                                            [routerLink]="['/task/detail', item.team_id]">{{item.name}}</a>
+                                    </td>
+                                      <td>
+                                          {{item.status}}
+                                      </td>
+                                      <td>
+                                          {{item.start_date}}
+                                      </td>
+                                      <td class="text-danger">
+                                          {{item.finish_date}}
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="col-md-12">
+              <div class="card card-plain">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title mt-0"> Table on Plain Background</h4>
+                      <p class="card-category"> Here is a subtitle for this table</p>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table table-hover">
+                              <thead class="">
+                                  <th>
+                                      ID
+                                  </th>
+                                  <th>
+                                      Name
+                                  </th>
+                                  <th>
+                                      Country
+                                  </th>
+                                  <th>
+                                      City
+                                  </th>
+                                  <th>
+                                      Salary
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>
+                                          1
+                                      </td>
+                                      <td>
+                                          Dakota Rice
+                                      </td>
+                                      <td>
+                                          Niger
+                                      </td>
+                                      <td>
+                                          Oud-Turnhout
+                                      </td>
+                                      <td>
+                                          $36,738
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+      </div>
+  </div>
+</div>
