@@ -11,6 +11,17 @@
       "port": 9255,
       "webRoot": "${workspaceFolder}",
       "url": "http://localhost:4200/#"
+    },
+    {
+        "name": "Attach to Chrome, with sourcemaps",
+        "type": "chrome",
+        "request": "attach",
+        "url": "http://localhost:4200",
+        "port": 9222,
+        "sourceMaps": true,
+        "webRoot": "${workspaceRoot}",
+        "diagnosticLogging": true,
+        "sourceMapPathOverrides": { "webpack:///./*": "${webRoot}/*" }
     }
   ]
 }

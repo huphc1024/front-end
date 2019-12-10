@@ -1,0 +1,60 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Thông tin dự án</h4>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-card>
+                        <mat-card-title>Tên dự án: {{project.name}}</mat-card-title>
+                      </mat-card>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <mat-label>Mô tả dự án</mat-label>
+                          <mat-card-content [innerHTML]="project.description"></mat-card-content>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-label>Quản lý dự án</mat-label>
+                      <mat-nav-list>
+                        <mat-list-item *ngFor="let item of managers" style="font-size: 13px; height: 25px;">
+                          <a matLine href="#">{{item.fullname}} - {{ item.email }}</a></mat-list-item>
+                      </mat-nav-list>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-label>Thành viên dự án</mat-label>
+                      <mat-nav-list>
+                        <mat-list-item *ngFor="let item of users" style="font-size: 13px; height: 25px;">
+                          <a matLine href="#">{{item.fullname}} - {{ item.email }}</a></mat-list-item>
+                      </mat-nav-list>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button *ngIf="isAdmin" mat-raised-button (click)="edit(project.project_id)" class="btn btn-danger pull-right">Sửa</button>
+              <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

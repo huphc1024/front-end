@@ -1,0 +1,104 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="isDel">
+            Cập nhật dữ liệu thành công!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-md-12" *ngIf="isAdmin">
+                <a href="/project/add"><button mat-raised-button class="btn btn-danger pull-right">Thêm
+                        mới</button></a>
+            </div>
+            <div class="col-md-12">
+                <form class="navbar-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group no-border">
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Tên dự án" type="text" formControlName="name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày" formControlName="date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <button mat-raised-button  type="submit" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                            <button mat-raised-button type="reset" (click)="resetForm()"
+                                class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">refresh</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Dự án</h4>
+                        <p class="card-category"> Danh mục dự án</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-info">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Dự án
+                                    </th>
+                                    <th>
+                                        Mô tả
+                                    </th>
+                                    <th>
+                                        Bắt đầu
+                                    </th>
+                                    <th style="width: 10%;" *ngIf="isAdmin">
+                                        Hành động
+                                    </th>
+                                </thead>
+                                <tbody>
+                                        <tr *ngIf="teams == null">
+                                                Không tìm thấy dự án
+                                            </tr>
+                                    <tr *ngFor="let item of teams">
+                                        <td>
+                                            {{item.project_id}}
+                                        </td>
+                                        <td>
+                                            <a class="nav-link"
+                                                [routerLink]="['/project/detail', item.project_id]">{{item.name}}</a>
+                                        </td>
+                                        <td [innerHTML]="item.description"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">
+                                        </td>
+                                        <td>
+                                            {{item.created}}
+                                        </td>
+                                        <td *ngIf="isAdmin">
+                                            <a class="nav-link" matTooltip="Xóa" [matTooltipPosition]="'above'" (click)="delete(item.project_id)"
+                                                href="javascript:void(0)"><i class="material-icons">delete</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <mat-paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="pageSize"
+                        [pageSizeOptions]="[10,25,50,100]">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

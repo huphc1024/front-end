@@ -16,7 +16,13 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (isPlatformBrowser(this.platformId)) {
-      const currentUser = JSON.parse(localStorage.getItem('user'));
+      let currentUser: { access_token: any; };
+      if(sessionStorage.length > 0){
+        currentUser = JSON.parse(sessionStorage.getItem('user'));
+      }
+      if(localStorage.length > 0){
+        currentUser = JSON.parse(localStorage.getItem('user'));
+      }
       if (!currentUser || !currentUser.access_token ) {
         localStorage.removeItem('session');
         localStorage.removeItem('user');

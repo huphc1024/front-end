@@ -9,6 +9,9 @@
 
     <div class="fadeIn first">
       <h1>LOGIN</h1>
+      <div *ngIf="denessLogin" class="invalid-feedback">
+          <div *ngIf="denessLogin">Sai email hoặc mật khẩu</div>
+        </div>
     </div>
 
     <!-- Login Form -->
@@ -18,8 +21,9 @@
           <input matInput placeholder="Email" type="text" formControlName="email" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && fval.email.errors }">
           <div *ngIf="submitted && fval.email.errors" class="invalid-feedback">
-            <div *ngIf="fval.email.errors.required">H?y nh?p email c?a b?n</div>
+            <div *ngIf="fval.email.errors.required">Vui lòng nhập email</div>
           </div>
+
         </div>
       </div>
       <div class="row">
@@ -27,7 +31,7 @@
           <input matInput placeholder="Password" type="password" formControlName="password" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && fval.password.errors }">
           <div *ngIf="submitted && fval.password.errors" class="invalid-feedback">
-            <div *ngIf="fval.password.errors.required">H?y nh?p m?t kh?u c?a b?n</div>
+            <div *ngIf="fval.password.errors.required">Vui lòng nhập mật khẩu</div>
           </div>
         </div>
       </div>
@@ -43,11 +47,18 @@
         </div>
       </div>
     </form>
-
-    <!-- Remind Passowrd
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
-    </div> -->
-
   </div>
+</div>
+<div *ngIf="isWait" style="align-items: center;
+  position: fixed;
+  justify-content: center;
+  z-index: 1000;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  background: #847d7d30;">
+  <mat-spinner style="width: 100px;
+    height: 100px;
+    margin-top: 20%;
+    margin-left: 46%;"></mat-spinner>
 </div>

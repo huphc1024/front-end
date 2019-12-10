@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Constant } from 'app/constant/constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  apiURL: string = 'https://daily-report1.herokuapp.com/api';
   constructor(private http: HttpClient) { }
 
-  public getTasks() {
-    return this.http.get<any>(this.apiURL + '/tasks/user/2');
+  public getIssues(page: number, size: number, name: string, date: string, status: string, work_type: string, project_id: number) {
+    let params = new HttpParams().set('page', page.toString()).set('size',size.toString()).set('name', name).set('date', date)
+    .set('status', status).set('work_type', work_type).set('project_id', project_id.toString());
+    return this.http.get<any>(Constant.apiURL + '/api/issues', {params});
+  }
+  public getIssuesByUser(id: number) {
+    return this.http.get<any>(Constant.apiURL + '/api/issues/user/' + id);
+  }
+  public getIssuesByProject(id: number) {
+    return this.http.get<any>(Constant.apiURL + '/api/issues/project/'+id);
   }
 
-  public getTaskById(id: number): Observable<any> {
-    return this.http.get<any>(this.apiURL + '/task/' + id);
+  public getIssuesById(id: number): Observable<any> {
+    return this.http.get<any>(Constant.apiURL + '/api/issue/' + id);
   }
 
-  public createTask(obj: any): Observable<any> {
-    return this.http.post(this.apiURL + '/task', obj);
+  public getIssuesDetail(id: number): Observable<any> {
+    return this.http.get<any>(Constant.apiURL + '/api/issue-detail/' + id);
   }
 
-}
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  public createIssues(obj: any): Observable<any> {
+    return this.http.post(Constant.apiURL + '/api/issue', obj);
+  }
+
+  public update(obj: any): Observable<any> {
+    return this.http.put(Constant.apiURL + '/api/issue', obj);
+  }
+
 }

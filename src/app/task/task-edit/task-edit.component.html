@@ -1,0 +1,156 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Cập nhật công việc</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="addForm" (ngSubmit)="onSubmit();">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Dự án</mat-label>
+                        <mat-select formControlName="projectId" class="form-control" name="projectId">
+                          <mat-option *ngFor="let item of listProject" [value]="item.project_id">
+                            {{item.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Giao cho thành viên</mat-label>
+                        <mat-select formControlName="userId" class="form-control" name="userId"
+                          [ngClass]="{ 'is-invalid': submitted && fval.userId.errors }">
+                          <mat-option *ngFor="let item of listUsers" [value]="item.user_id">
+                            {{item.fullname}}({{item.email}})</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Tên công việc" type="text" formControlName="name" name="name"
+                          class="form-control" maxlength="50"
+                          [ngClass]="{ 'is-invalid': submitted && fval.name.errors }">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Chọn ngày bắt đầu" name="start_date"
+                          formControlName="start_date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker1" placeholder="Chọn ngày kết thúc" name="finish_date"
+                          formControlName="finish_date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <mat-form-field>
+                        <mat-label>Loại công việc</mat-label>
+                        <mat-select formControlName="work_type" class="form-control" name="work_type">
+                          <mat-option [value]="1">Task</mat-option>
+                          <mat-option [value]="2">Bug</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field>
+                        <mat-label>Trạng thái</mat-label>
+                        <mat-select formControlName="status" class="form-control" name="status">
+                          <mat-option [value]="0">Open</mat-option>
+                          <mat-option [value]="1">Inprocess</mat-option>
+                          <mat-option [value]="2">Close</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field>
+                        <mat-label>Hoàn thành</mat-label>
+                        <mat-select formControlName="done" class="form-control" name="done">
+                          <mat-option [value]="0">0%</mat-option>
+                          <mat-option [value]="10">10%</mat-option>
+                          <mat-option [value]="20">20%</mat-option>
+                          <mat-option [value]="30">30%</mat-option>
+                          <mat-option [value]="40">40%</mat-option>
+                          <mat-option [value]="50">50%</mat-option>
+                          <mat-option [value]="60">60%</mat-option>
+                          <mat-option [value]="70">70%</mat-option>
+                          <mat-option [value]="80">80%</mat-option>
+                          <mat-option [value]="90">90%</mat-option>
+                          <mat-option [value]="100">100%</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-label>Mô tả công việc</mat-label>
+                      <ckeditor matInput [editor]="Editor" formControlName="description"  name="description"
+                        [ngClass]="{ 'is-invalid': submitted && fval.description.errors }">
+                      </ckeditor>
+                      <div *ngIf="submitted && fval.description.errors" class="invalid-feedback">
+                        <div *ngIf="fval.description.errors.required">Hãy nhập mô tả công việc</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Cập nhật</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-4">
+          <div class="card card-profile">
+            <div class="card-avatar">
+              <a href="javascript:void(0)">
+                <img class="img" src="./assets/img/faces/marc.jpg" />
+              </a>
+            </div>
+            <div class="card-body">
+              <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+              <h4 class="card-title">Alec Thompson</h4>
+              <p class="card-description">
+                Don't be scared of the truth because we need to restart the human foundation in truth And I love you like
+                Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+              </p>
+              <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
+            </div>
+          </div>
+        </div> -->
+    </div>
+  </div>
+</div>
+<div *ngIf="isWait" style="align-items: center;
+  position: fixed;
+  justify-content: center;
+  z-index: 1000;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  background: #847d7d30;">
+  <mat-spinner style="width: 100px;
+    height: 100px;
+    margin-top: 20%;
+    margin-left: 35%;"></mat-spinner>
+</div>

@@ -1,86 +1,169 @@
 <div class="main-content">
-  <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <form class="navbar-form">
-                  <div class="input-group no-border">
-                      <div class="col-md-4">
-                          <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Tên công việc" type="text" formControlName="name">
-                          </mat-form-field>
-                      </div>
-                      <div class="col-md-4">
-                          <mat-form-field class="example-full-width">
-                              <input matInput [matDatepicker]="picker" placeholder="Chọn ngày">
-                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                              <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
-                      </div>
-                      <div class="col-md-4">
-                          <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
-                              <i class="material-icons">search</i>
-                              <div class="ripple-container"></div>
-                          </button>
-                      </div>
+    <div class="container-fluid">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="isDel">
+            Cập nhật dữ liệu thành công!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12" *ngIf="isAdmin">
+                    <a href="/issue/add"><button mat-raised-button class="btn btn-danger pull-right">Thêm
+                            mới</button></a>
+                </div>
+                <form class="navbar-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group no-border">
+                        <div class="col-md-2">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Dự án</mat-label>
+                                <mat-select formControlName="project_id">
+                                    <mat-option *ngFor="let item of listProject" [value]="item.project_id">
+                                        {{item.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Loại công việc</mat-label>
+                                <mat-select formControlName="work_type">
+                                    <mat-option [value]="1">Task</mat-option>
+                                    <mat-option [value]="2">Bug</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-                  </div>
-              </form>
-          </div>
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-info">
-                      <h4 class="card-title ">Công việc</h4>
-                      <p class="card-category"> Các công việc của bạn ở đây</p>
-                  </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table">
-                              <thead class=" text-info">
-                                  <th>
-                                      ID
-                                  </th>
-                                  <th>
-                                      Công việc
-                                  </th>
-                                  <th>
-                                      Trạng thái
-                                  </th>
-                                  <th>
-                                      Bắt đầu
-                                  </th>
-                                  <th class="text-danger">
-                                      Kết thúc
-                                  </th>
-                              </thead>
-                              <tbody>
-                                  <tr *ngIf="tasks == null">
-                                    Không có công việc
-                                  </tr>
-                                <tr *ngFor="let item of tasks">
-                                      <td>
-                                          {{item.task_id}}
-                                      </td>
-                                      <td>
-                                        <a class="nav-link"
-                                            [routerLink]="['/task/detail', item.team_id]">{{item.name}}</a>
-                                    </td>
-                                      <td>
-                                          {{item.status}}
-                                      </td>
-                                      <td>
-                                          {{item.start_date}}
-                                      </td>
-                                      <td class="text-danger">
-                                          {{item.finish_date}}
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- <div class="col-md-12">
+                        <div class="col-md-2">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Trạng thái</mat-label>
+                                <mat-select formControlName="status">
+                                    <mat-option [value]="0">Open</mat-option>
+                                    <mat-option [value]="1">Inprocess</mat-option>
+                                    <mat-option [value]="2">Close</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Tên công việc" type="text" formControlName="name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày" formControlName="date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                            <button mat-raised-button type="reset" (click)="resetForm()"
+                                class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">refresh</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Công việc</h4>
+                        <p class="card-category"> Các công việc của bạn ở đây</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-info">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Dự án
+                                    </th>
+                                    <th>
+                                        Công việc
+                                    </th>
+                                    <th>
+                                        Loại công việc
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                    <th>
+                                        Người nhận
+                                    </th>
+                                    <th>
+                                        Bắt đầu
+                                    </th>
+                                    <th class="text-danger">
+                                        Kết thúc
+                                    </th>
+                                    <th *ngIf="isAdmin">
+                                        Hành động
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="issues == null">
+                                        Không có công việc
+                                    </tr>
+                                    <tr *ngFor="let item of issues">
+                                        <td>
+                                            {{item.issue_id}}
+                                        </td>
+                                        <td>
+                                            <a class="nav-link"
+                                                [routerLink]="['/project/detail', item.project_id]">{{item.project_name}}</a>
+                                        </td>
+                                        <td>
+                                            <a class="nav-link"
+                                                [routerLink]="['/issue/detail', item.issue_id]">{{item.name}}</a>
+                                        </td>
+                                        <td *ngIf="item.work_type == 1">
+                                            {{work_type_task}}
+                                        </td>
+                                        <td *ngIf="item.work_type == 2">
+                                            {{work_type_bug}}
+                                        </td>
+                                        <td *ngIf="item.status == 0">
+                                            {{status_open}}
+                                        </td>
+                                        <td *ngIf="item.status == 1">
+                                            {{status_inprocess}}
+                                        </td>
+                                        <td *ngIf="item.status == 2">
+                                            {{status_close}}
+                                        </td>
+                                        <td>
+                                            {{item.fullname}}
+                                        </td>
+                                        <td>
+                                            {{item.start_date}}
+                                        </td>
+                                        <td class="text-danger">
+                                            {{item.finish_date}}
+                                        </td>
+                                        <td *ngIf="isAdmin">
+                                            <a class="nav-link" (click)="delete(item.issue_id)" matTooltip="Xóa"
+                                                [matTooltipPosition]="'above'" href="javascript:void(0)"><i
+                                                    class="material-icons">delete</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <mat-paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="pageSize"
+                        [pageSizeOptions]="[10,25,50,100]">
+                    </mat-paginator>
+                </div>
+            </div>
+            <!-- <div class="col-md-12">
               <div class="card card-plain">
                   <div class="card-header card-header-danger">
                       <h4 class="card-title mt-0"> Table on Plain Background</h4>
@@ -130,6 +213,6 @@
                   </div>
               </div>
           </div> -->
-      </div>
-  </div>
+        </div>
+    </div>
 </div>

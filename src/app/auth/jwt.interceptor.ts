@@ -12,7 +12,13 @@ export class JwtInterceptor implements HttpInterceptor {
         if (request.url.includes('oauth/token')) {
 
         } else {
-            let currentUser: any = JSON.parse(localStorage.getItem('user'));
+            let currentUser: any;
+            if(sessionStorage.length > 0){
+                currentUser = JSON.parse(sessionStorage.getItem('user'));
+            }
+            if(localStorage.length > 0){
+                currentUser = JSON.parse(localStorage.getItem('user'));
+            }
             if (currentUser && currentUser.access_token) {
                 request = request.clone({
                     setHeaders: {

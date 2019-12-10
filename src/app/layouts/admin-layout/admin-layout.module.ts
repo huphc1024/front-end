@@ -7,9 +7,10 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
-import { TeamComponent } from '../../team/team.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import {
   MatButtonModule,
@@ -19,10 +20,19 @@ import {
   MatTooltipModule,
   MatSelectModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatProgressSpinnerModule,
+  MatPaginatorModule,
+  MatPaginatorIntl,
+  MatCardModule,
+  MatListModule,
+  MatDialogModule,
+  MatIconModule,
+  DateAdapter,
+  MAT_DATE_FORMATS
 } from '@angular/material';
-import { TeamDetailComponent } from 'app/team-detail/team-detail.component';
-import { TeamAddComponent } from 'app/team-add/team-add.component';
+import { ProjectDetailComponent } from 'app/project/project-detail/project-detail.component';
+import { ProjectComponent } from 'app/project/project/project.component';
 import { TaskListComponent } from 'app/task/task-list/task-list.component';
 import { TaskAddComponent } from 'app/task/task-add/task-add.component';
 import { TaskDetailComponent } from 'app/task/task-detail/task-detail.component';
@@ -31,6 +41,16 @@ import { BugAddComponent } from 'app/bug/bug-add/bug-add.component';
 import { BugListComponent } from 'app/bug/bug-list/bug-list.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'app/auth/jwt.interceptor';
+import { ProjectAddComponent } from 'app/project/project-add/project-add.component';
+import { CustomMatPaginatorIntl } from 'app/config/custompaging';
+import { ProjectEditComponent } from 'app/project/project-edit/project-edit.component';
+import { UserListComponent } from 'app/user/user-list/user-list.component';
+import { UserAddComponent } from 'app/user/user-add/user-add.component';
+import { UserEditComponent } from 'app/user/user-edit/user-edit.component';
+import { ChangePassComponent } from 'app/user/change-pass/change-pass.component';
+import { TaskEditComponent } from 'app/task/task-edit/task-edit.component';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.format';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -44,26 +64,50 @@ import { JwtInterceptor } from 'app/auth/jwt.interceptor';
     MatSelectModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    CKEditorModule,
+    MatProgressSpinnerModule,
+    NgxSpinnerModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatListModule,
+    MatDialogModule,
+    MatIconModule
   ],
   declarations: [
     DashboardComponent,
     UserProfileComponent,
-    TeamComponent,
+    ProjectComponent,
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    TeamDetailComponent,
-    TeamAddComponent,
+    ProjectDetailComponent,
+    ProjectAddComponent,
     TaskListComponent,
     TaskAddComponent,
     TaskDetailComponent,
     BugDetailComponent,
     BugAddComponent,
     BugListComponent,
+    ProjectEditComponent,
+    UserListComponent,
+    UserAddComponent,
+    UserEditComponent,
+    ChangePassComponent,
+    TaskEditComponent,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  {
+    provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl
+  },
+  {
+    provide: DateAdapter, useClass: AppDateAdapter
+  },
+  {
+    provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+  }
+  ],
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

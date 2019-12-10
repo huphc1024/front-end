@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError, map } from 'rxjs/operators';
+import { Constant } from './constant/constant';
 
 
 @Injectable({
@@ -15,10 +16,14 @@ export class ApiService {
       'Authorization': 'Basic Y2xpZW50SWQ6MTIzNDU2',
       'Content-type': 'application/x-www-form-urlencoded'
     }
-    return this.http.post<any>('https://daily-report1.herokuapp.com/oauth/token', loginPayload, { headers });
+    return this.http.post<any>(Constant.apiURL + '/oauth/token', loginPayload, { headers });
+  }
+
+  getUserInfo(){
+    return this.http.get<any>(Constant.apiURL + '/api/info-user');
   }
 
   logout() {
-    return this.http.delete<any>("https://daily-report1.herokuapp.com/api/logout");
+    return this.http.delete<any>(Constant.apiURL + "/api/logout");
   }
 }

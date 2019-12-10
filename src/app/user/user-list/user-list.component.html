@@ -1,0 +1,113 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="isDel">
+            Cập nhật dữ liệu thành công!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/user/add"><button mat-raised-button class="btn btn-danger pull-right">Thêm
+                        mới</button></a>
+            </div>
+            <div class="col-md-12">
+                <form class="navbar-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group no-border">
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Tên người dùng" type="text" formControlName="name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày" formControlName="date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                            <button mat-raised-button type="reset" (click)="resetForm()"
+                                class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">refresh</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Người dùng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-info">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Fullname
+                                    </th>
+                                    <th>
+                                        Phân quyền
+                                    </th>
+                                    <th>
+                                        Ngày tạo
+                                    </th>
+                                    <th style="width: 10%;" *ngIf="isAdmin">
+                                        Hành động
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="users == null">
+                                        Không tìm thấy user
+                                    </tr>
+                                    <tr *ngFor="let item of users">
+                                        <td>
+                                            {{item.user_id}}
+                                        </td>
+                                        <td>
+                                            <a class="nav-link"
+                                                [routerLink]="['/user/edit', item.user_id]">{{item.email}}</a>
+                                        </td>
+                                        <td>
+                                            {{item.fullname}}
+                                        </td>
+                                        <td>
+                                            {{item.roles}}
+                                        </td>
+                                        <td>
+                                            {{item.created}}
+                                        </td>
+                                        <td *ngIf="isAdmin">
+                                            <a class="nav-link" (click)="delete(item.email)" matTooltip="Xóa"
+                                                [matTooltipPosition]="'above'" href="javascript:void(0)"><i
+                                                    class="material-icons">delete</i></a>
+                                            <a class="nav-link" (click)="reset(item.email)" matTooltip="Reset Mật khẩu"
+                                                [matTooltipPosition]="'above'" href="javascript:void(0)"><i
+                                                    class="material-icons">refresh</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <mat-paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="pageSize"
+                        [pageSizeOptions]="[10,25,50,100]">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

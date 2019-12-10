@@ -1,3 +1,206 @@
-<p>
-  task-detail works!
-</p>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="isDel">
+      Cập nhật dữ liệu thành công!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Thông tin công việc</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-12">
+                    <mat-card>
+                      <mat-card-title>Tên công việc: {{issue.name}}</mat-card-title>
+                    </mat-card>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <mat-card>
+                          <mat-label>Dự án: </mat-label>
+                          <mat-label>{{issue.project_name}}</mat-label>
+                        </mat-card>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <mat-label>Mô tả công việc</mat-label>
+                        <mat-card-content [innerHTML]="issue.description"></mat-card-content>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Trạng thái:</mat-label>
+                      <mat-label class="pull-right">{{status}}</mat-label>
+                    </mat-card>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Loại công việc:</mat-label>
+                      <mat-label class="pull-right">{{work_type}}</mat-label>
+                    </mat-card>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Ngày bắt đầu:</mat-label>
+                      <mat-label class="pull-right">{{issue.start_date}}</mat-label>
+                    </mat-card>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Ngày kết thúc:</mat-label>
+                      <mat-label class="pull-right">{{issue.finish_date}}</mat-label>
+                    </mat-card>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Người tạo:</mat-label>
+                      <mat-label class="pull-right">{{issue.createdby_username}}</mat-label>
+                    </mat-card>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Người nhận:</mat-label>
+                      <mat-label class="pull-right">{{issue.fullname}}</mat-label>
+                    </mat-card>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Tiến độ:</mat-label>
+                      <mat-label class="pull-right">{{issue.done}}%</mat-label>
+                    </mat-card>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-card>
+                      <mat-label>Cập nhật bởi:</mat-label>
+                      <mat-label class="pull-right">{{issue.lastmodifiedby_username}}</mat-label>
+                    </mat-card>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <button mat-raised-button (click)="isAddReport = !isAddReport"
+              class="btn btn-danger pull-right">{{isAddReport ? 'Ẩn' : 'Thêm báo cáo'}}</button>
+            <button mat-raised-button (click)="edit(issue.issue_id)" class="btn btn-danger pull-right">Cập nhật</button>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <!-- Report -->
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Thông tin báo cáo</h4>
+          </div>
+          <div class="card-body">
+            <mat-card *ngIf="!listReports">
+              <mat-label>
+                Chưa có báo cáo!
+              </mat-label>
+            </mat-card>
+            <form [formGroup]="addForm" (ngSubmit)="onSubmit(issue.issue_id);" *ngIf="isAddReport">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-label>Báo cáo công việc</mat-label>
+                  <ckeditor matInput [editor]="Editor" formControlName="content" name="content"
+                    [ngClass]="{ 'is-invalid': submitted && fval.content.errors }">
+                  </ckeditor>
+                  <div *ngIf="submitted && fval.content.errors" class="invalid-feedback">
+                    <div *ngIf="fval.content.errors.required">Hãy nhập báo cáo công việc</div>
+                  </div>
+                </div>
+              </div>
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Thêm báo cáo</button>
+              <div class="clearfix"></div>
+            </form>
+            <div class="row" *ngFor="let item of listReports; let index = index" style="margin-top: 20px;">
+              <div class="col-md-12">
+                <mat-card>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-5">
+                      <mat-label>Cập nhật bởi:</mat-label>
+                      <mat-label class="pull-right">{{item.lastmodifiedby ? item.lastmodifiedby : item.createdby}}</mat-label>
+                    </div>
+                    <div class="col-md-5">
+                      <mat-label>Cập nhật lúc:</mat-label>
+                      <mat-label class="pull-right">{{item.lastmodified ? item.lastmodified : item.created}}</mat-label>
+                    </div>
+                    <div class="col-md-1">
+                      <a *ngIf="edit_item != item.report_id" class="nav-link" (click)="edit_item = item.report_id"
+                        href="javascript:void(0)"><i class="material-icons">edit</i></a>
+                      <a *ngIf="edit_item == item.report_id" class="nav-link"
+                        (click)="saveReport(item.report_id,index, issue.issue_id); edit_item = 0"
+                        href="javascript:void(0)"><i class="material-icons">save</i></a>
+                    </div>
+                    <div class="col-md-1">
+                      <a style class="nav-link" (click)="deleteReport(item.report_id, issue.issue_id)"
+                        href="javascript:void(0)"><i class="material-icons">delete</i></a>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-12" *ngIf="edit_item != item.report_id">
+                      <mat-card>
+                        <mat-label>Nội dung:</mat-label>
+                        <mat-card-content [innerHTML]="item.content"></mat-card-content>
+                      </mat-card>
+                    </div>
+                    <div class="col-md-12" *ngIf="edit_item == item.report_id">
+                      <mat-label>Báo cáo công việc</mat-label>
+                      <ckeditor matInput [editor]="Editor" data="{{item.content}}" [(ngModel)]="item.content"
+                        [ngClass]="{ 'is-invalid': submitted && fval.content.errors }">
+                      </ckeditor>
+                      <div *ngIf="submitted && fval.content.errors" class="invalid-feedback">
+                        <div *ngIf="fval.content.errors.required">Hãy nhập báo cáo công việc</div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+            <mat-paginator (page)="pageChangeEvent($event, issue.issue_id)" [length]="length" [pageSize]="pageSize"
+              [pageSizeOptions]="[10,25,50,100]">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isWait" style="align-items: center;
+position: fixed;
+justify-content: center;
+z-index: 1000;
+width: 100vw;
+height: 100%;
+top: 0;
+background: #847d7d30;">
+  <mat-spinner style="width: 100px;
+  height: 100px;
+  margin-top: 20%;
+  margin-left: 35%;"></mat-spinner>
+</div>

@@ -8,11 +8,10 @@ declare interface RouteInfo {
   class: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
-  { path: '/team', title: 'Nhóm', icon: 'group', class: '' },
-  { path: '/task/list', title: 'Công việc', icon: 'content_paste', class: '' },
-  { path: '/user-profile', title: 'Thông tin tài khoản', icon: 'person', class: '' },
-  { path: '/icons', title: 'Icons', icon: 'bubble_chart', class: '' },
+  { path: '/home', title: 'Home', icon: 'home', class: '' },
+  { path: '/project', title: 'Project', icon: 'group', class: '' },
+  { path: '/issue', title: 'Issue', icon: 'content_paste', class: '' },
+  //{ path: '/icons', title: 'Icons', icon: 'bubble_chart', class: '' },
   //{ path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
   //{ path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
   //{ path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
@@ -25,11 +24,30 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
-
+  isAdmin = false;
   constructor() { }
 
   ngOnInit() {
+    let countRole = 0
+    let user: any;
+    if (sessionStorage.length > 0) {
+      user = JSON.parse(sessionStorage.getItem('userInfo'));
+    }
+    if (localStorage.length > 0) {
+      user = JSON.parse(localStorage.getItem('userInfo'));
+    }
+    user.data.roles.forEach(element => {
+      if (element.role == 'ADMIN')
+        countRole++;
+    });
+    if (countRole > 0) {
+      this.isAdmin = true;
+    }
+    if(this.isAdmin){
+      ROUTES.push({ path: '/user', title: 'Thông tin người dùng', icon: 'person', class: '' });
+    }
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    
   }
   isMobileMenu() {
     if ($(window).width() > 991) {

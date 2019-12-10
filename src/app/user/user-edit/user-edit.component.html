@@ -1,0 +1,88 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Sửa người dùng</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="addForm" (ngSubmit)="onSubmit(user.user_id);">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Email" type="text" formControlName="email" name="email" disabled="true" 
+                          class="form-control" type="email" maxlength="50">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Họ và tên" type="text" formControlName="fullname" name="fullname" 
+                          class="form-control" maxlength="50"
+                          [ngClass]="{ 'is-invalid': submitted && fval.fullname.errors }">
+                        <div *ngIf="submitted && fval.fullname.errors" class="invalid-feedback">
+                          <div *ngIf="fval.fullname.errors.required">Bạn hãy nhập họ và tên</div>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <mat-label>Phân quyền</mat-label>
+                    <mat-select formControlName="role_id" class="form-control"  name="role_id"
+                      [ngClass]="{ 'is-invalid': submitted && fval.role_id.errors }">
+                      <mat-option *ngFor="let item of roles" [value]="item.key">{{item.value}}</mat-option>
+                    </mat-select>
+                    <div *ngIf="submitted && fval.role_id.errors" class="invalid-feedback">
+                      <div *ngIf="fval.role_id.errors.required">Hãy chọn phân quyền</div>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Sửa</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-4">
+          <div class="card card-profile">
+            <div class="card-avatar">
+              <a href="javascript:void(0)">
+                <img class="img" src="./assets/img/faces/marc.jpg" />
+              </a>
+            </div>
+            <div class="card-body">
+              <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+              <h4 class="card-title">Alec Thompson</h4>
+              <p class="card-description">
+                Don't be scared of the truth because we need to restart the human foundation in truth And I love you like
+                Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+              </p>
+              <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
+            </div>
+          </div>
+        </div> -->
+    </div>
+  </div>
+</div>
+<div *ngIf="isWait" style="align-items: center;
+  position: fixed;
+  justify-content: center;
+  z-index: 1000;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  background: #847d7d30;">
+  <mat-spinner style="width: 100px;
+    height: 100px;
+    margin-top: 20%;
+    margin-left: 35%;"></mat-spinner>
+</div>
