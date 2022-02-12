@@ -34,7 +34,7 @@
     "@ckeditor/ckeditor5-build-balloon": "^15.0.0",
     "@ckeditor/ckeditor5-build-classic": "^15.0.0",
     "@material/linear-progress": "^4.0.0",
-    "ajv": "6.10.0",
+    "ajv": "6.12.3",
     "angular-ide": "^0.9.69",
     "angular-oauth2-oidc": "^8.0.4",
     "angularx-social-login": "^2.1.1",
